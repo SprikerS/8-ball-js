@@ -17,10 +17,13 @@
         "height": 400,
         "alwaysOnTop": true,
         "center": true,
+        "decorations": false,
         "fullscreen": false,
         "maximizable": false,
         "minimizable": false,
-        "resizable": false
+        "resizable": false,
+        "shadow": false,
+        "transparent": true
       }
     ],
     "security": {

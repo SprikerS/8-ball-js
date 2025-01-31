@@ -6,13 +6,17 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-  background-color: #181818;
+  background: transparent;
+}
+
+body {
   display: grid;
   height: 100vh;
   place-items: center;
 }
 
-canvas {
+/* canvas {
   background-color: #313131;
-}
+} */
