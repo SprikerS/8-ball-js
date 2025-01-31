@@ -1,6 +1,4 @@
-import { ctx } from '../utils/ctx.js';
-import { paintGuideLines, scalePolygon } from '../utils/utils.js';
-import { computeReflectionPoints } from '../utils/reflections.js';
+import { computeReflectionPoints, ctx, paintGuideLines, scalePolygon } from '../utils';
 
 class Polygon {
   constructor(points, mainBall, outsideBall) {

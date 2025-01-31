@@ -1,4 +1,4 @@
 const $canvas = document.querySelector('#canvas');
 const ctx = $canvas.getContext('2d');
 
-export { ctx };
+export { $canvas, ctx };

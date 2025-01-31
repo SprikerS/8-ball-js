@@ -1,4 +1,4 @@
-import { ctx } from '../utils/ctx.js';
+import { ctx } from '../utils';
 
 class Ball {
   constructor({ x = undefined, y = undefined, radius = 10, color = 'rgba(255, 255, 255, 0.5)', isInside = true } = {}) {
