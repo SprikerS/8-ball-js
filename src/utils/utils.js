@@ -41,36 +41,19 @@ function getLineIntersection(p1, p2, p3, p4) {
 /**
  * Calculates the endpoints of a line given two points and their respective radii.
  */
-function calculateLineEndpoints(p1, p2) {
+function calculateLineEndpoints(p1, p2, radius) {
   const lineWidth = ctx.lineWidth;
 
   const { angle } = calculateAngle(p1.x, p1.y, p2.x, p2.y);
-  const offset = (radius, lineWidth) => (radius ? radius + lineWidth / 2 : 1);
+  const offset = (r, l) => (r ? r + l / 2 : 1);
 
-  const startX = p1.x + Math.cos(angle) * offset(10, lineWidth);
-  const startY = p1.y + Math.sin(angle) * offset(10, lineWidth);
+  const startX = p1.x + Math.cos(angle) * offset(radius, lineWidth);
+  const startY = p1.y + Math.sin(angle) * offset(radius, lineWidth);
 
-  const endX = p2.x - Math.cos(angle) * offset(10, lineWidth);
-  const endY = p2.y - Math.sin(angle) * offset(10, lineWidth);
+  const endX = p2.x - Math.cos(angle) * offset(radius, lineWidth);
+  const endY = p2.y - Math.sin(angle) * offset(radius, lineWidth);
 
   return { startX, startY, endX, endY };
-}
-
-/*
- * Función para pintar una línea desde un punto a otro
- */
-function paintLine(p1, p2) {
-  const { startX, startY, endX, endY } = calculateLineEndpoints(p1, p2);
-
-  ctx.beginPath();
-  ctx.setLineDash([1, 4]);
-  ctx.moveTo(startX, startY);
-  ctx.lineTo(endX, endY);
-  ctx.strokeStyle = 'red';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.closePath();
 }
 
 /*
@@ -87,12 +70,12 @@ function paintCircle(point, radius = 4, color = 'orange') {
 /**
  * Draws guide lines and a circle at the endpoint on the canvas.
  */
-function paintGuideLines(p1, p2, position) {
+function paintGuideLines(p1, p2, radius, position) {
   ctx.beginPath();
 
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
 
-  const { startX, startY, endX, endY } = calculateLineEndpoints(p1, p2);
+  const { startX, startY, endX, endY } = calculateLineEndpoints(p1, p2, radius);
   const L1 = position === 'START' ? { x: startX, y: startY } : { ...p1 };
   const L2 = position === 'FINAL' ? { x: endX, y: endY } : { ...p2 };
 
@@ -103,7 +86,7 @@ function paintGuideLines(p1, p2, position) {
   ctx.closePath();
 
   ctx.beginPath();
-  ctx.arc(p2.x, p2.y, 10, 0, Math.PI * 2, 1);
+  ctx.arc(p2.x, p2.y, radius, 0, Math.PI * 2, 1);
   ctx.stroke();
   ctx.closePath();
 }
@@ -147,4 +130,4 @@ function getMousePos(event) {
   };
 }
 
-export { calculateAngle, getLineIntersection, getMousePos, paintCircle, paintGuideLines, paintLine, scalePolygon };
+export { calculateAngle, getLineIntersection, getMousePos, paintCircle, paintGuideLines, scalePolygon };

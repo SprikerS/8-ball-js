@@ -52,12 +52,14 @@ class Polygon {
   }
 
   drawLineGuide() {
-    const newPoints = scalePolygon(this.bounds.vtxs, 10);
+    const radius = this.mainBall.radius;
+    const newPoints = scalePolygon(this.bounds.vtxs, radius);
+
     const reflections = computeReflectionPoints(this.mainBall, this.outsideBall, newPoints, this.maxReflections);
     reflections.forEach((point, i) => {
       const { p1, p2 } = point;
       const type = i === 0 ? 'START' : i === reflections.length - 1 ? 'FINAL' : null;
-      paintGuideLines(p1, p2, type);
+      paintGuideLines(p1, p2, radius, type);
     });
   }
 
