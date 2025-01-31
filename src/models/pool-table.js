@@ -4,11 +4,11 @@ import { $canvas, ctx, getMousePos } from '../utils/index.js';
 
 const points = [
   { x: 100, y: 100 },
-  { x: 300, y: 100 },
-  { x: 500, y: 100 },
-  { x: 500, y: 300 },
-  { x: 300, y: 300 },
-  { x: 100, y: 300 },
+  { x: 828, y: 100 },
+  { x: 1556, y: 100 },
+  { x: 1556, y: 828 },
+  { x: 828, y: 828 },
+  { x: 100, y: 828 },
 ];
 
 const mainBall = new Ball();

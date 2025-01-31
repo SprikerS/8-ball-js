@@ -1,7 +1,7 @@
 import { ctx } from '../utils';
 
 class Ball {
-  constructor({ x = undefined, y = undefined, radius = 10, color = 'rgba(255, 255, 255, 0.5)', isInside = true } = {}) {
+  constructor({ x = undefined, y = undefined, radius = 20, color = 'rgba(255, 255, 255, 0.5)', isInside = true } = {}) {
     this.x = x;
     this.y = y;
     this.radius = radius;
