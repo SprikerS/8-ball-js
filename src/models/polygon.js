@@ -7,17 +7,33 @@ class Polygon {
     this.outsideBall = outsideBall;
     this.maxReflections = 3;
 
-    this.bounds = this.getBounds();
-    this.mainBall.setBounds(this.bounds);
-    this.outsideBall.setBounds(this.bounds);
+    this.scaledVtxs = [];
+    this.rescalePoints = [];
+
+    this.setup();
+  }
+
+  setup() {
+    const { vtxs, ...bounds } = this.getBounds();
+    this.mainBall.setBounds(bounds);
+    this.outsideBall.setBounds(bounds);
+
+    this.scaledVtxs = scalePolygon(vtxs, this.mainBall.radius);
+    this.rescalePoints = structuredClone(this.scaledVtxs);
+
+    this.rescalePoints.splice(1, 0, this.points[1]);
+    this.rescalePoints.splice(3, 0, this.points[4]);
   }
 
   getBounds() {
+    const xValues = this.points.map(point => point.x);
+    const yValues = this.points.map(point => point.y);
+
     return {
-      xMin: Math.min(...this.points.map(point => point.x)),
-      xMax: Math.max(...this.points.map(point => point.x)),
-      yMin: Math.min(...this.points.map(point => point.y)),
-      yMax: Math.max(...this.points.map(point => point.y)),
+      xMin: Math.min(...xValues),
+      xMax: Math.max(...xValues),
+      yMin: Math.min(...yValues),
+      yMax: Math.max(...yValues),
       vtxs: [this.points[0], this.points[2], this.points[3], this.points[5]],
     };
   }
@@ -52,19 +68,16 @@ class Polygon {
   }
 
   drawLineGuide() {
-    const radius = this.mainBall.radius;
-    const newPoints = scalePolygon(this.bounds.vtxs, radius);
-
-    const reflections = computeReflectionPoints(this.mainBall, this.outsideBall, newPoints, this.maxReflections);
+    const reflections = computeReflectionPoints(this.mainBall, this.outsideBall, this.scaledVtxs, this.maxReflections);
     reflections.forEach((point, i) => {
       const { p1, p2 } = point;
       const type = i === 0 ? 'START' : i === reflections.length - 1 ? 'FINAL' : null;
-      paintGuideLines(p1, p2, radius, type);
+      paintGuideLines(p1, p2, this.mainBall.radius, type);
     });
   }
 
   drawnShape() {
-    this.points.forEach(({ x, y }) => {
+    this.rescalePoints.forEach(({ x, y }) => {
       const dx = this.mainBall.x - x;
       const dy = this.mainBall.y - y;
       const distance = Math.sqrt(dx * dx + dy * dy);
