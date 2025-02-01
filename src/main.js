@@ -11,3 +11,7 @@ const window = getCurrentWindow();
     window.setIgnoreCursorEvents(isClickeable);
   });
 })();
+
+if (!import.meta.env.DEV) {
+  document.addEventListener('contextmenu', event => event.preventDefault());
+}
